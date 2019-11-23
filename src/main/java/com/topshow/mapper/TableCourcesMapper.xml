@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topshow.mapper.TableCourcesMapper">
+    <resultMap type="Week" id="weekResultMap">
+    	<id column="id" property="id"></id>
+    	<result column="describe" property="describe"/>
+    	<result column="english" property="english"/> 
+    	<collection property="tableCources" ofType="TableCources">
+    		<id column="table_coures_id" property="id"/>
+    		<result column="name" property="name"/>
+	    	<result column="star_class" property="star_class"/>
+	    	<result column="type" property="type"/>
+	    	<result column="effect" property="effect"/>
+	    	<result column="start_time" property="start_time"/>
+	    	<result column="end_time" property="end_time"/>
+	    	<association column="week" property="week" select="getWeekById"/>
+	    	<association property="storeFront" column="storefront" select="getStoreFrontById"/>
+    	</collection>
+    </resultMap>
+    <resultMap type="StoreFront" id="storeResultMap">
+    	<id column="id" property="id"></id>
+    	<result column="name" property="name"/>
+    </resultMap>
+    <select id="getWeek" resultMap="weekResultMap">
+    	select * from  `week` ORDER BY FIELD(`describe`,'星期一','星期二','星期三','星期四','星期五','星期六','星期天') ; 
+    </select>
+    <select id="getWeekById" resultMap="weekResultMap">
+    	select * from  `week` where id = #{id}
+    </select>
+    <select id="getStoreFrontById" resultMap="storeResultMap">
+    	select * from  `storefront` where id = #{id}
+    </select>
+    <insert id="addCources" parameterType="TableCources" useGeneratedKeys="true" keyProperty="id">
+    	insert into table_cources(id,name,star_class,type,effect,start_time,end_time,week,storefront)
+    	values(#{id},#{name},#{star_class},#{type},#{effect},#{start_time},#{end_time},#{week.id},#{storeFront.id})
+    </insert>
+    <select id="findAllTableCourcesByStoreId" resultMap="tableCourcesResultMap">
+    	select * from `table_cources` WHERE storefront = #{id}
+    </select>
+    <select id="findAllTableCourcesByWeekId" resultMap="tableCourcesResultMap">
+    	select * from `table_cources` WHERE week = #{id}
+    </select>
+    <select id="findAllWeekCources" resultMap="weekResultMap">
+    	SELECT *,table_cources.id as table_coures_id FROM `week` LEFT JOIN table_cources ON `week`.id = table_cources.`week` WHERE table_cources.storefront = #{id}
+    	 ORDER BY table_cources.end_time ASC
+    </select>
+    <select id="findCourcesByFrontIdAndWeekId" resultMap="tableCourcesResultMap">
+    	select * from `table_cources` WHERE storefront = #{frontId} AND week = #{weekId} ORDER BY end_time ASC;
+    </select>
+    <select id="findCourcesById" resultMap="tableCourcesResultMap">
+    	select * from `table_cources` WHERE id = #{id}
+    </select>
+    <update parameterType="TableCources" id="update">
+    	update `table_cources`
+    	<set>
+    		<if test="name != null">`name`=#{name},</if>
+            <if test="star_class != null">star_class=#{star_class},</if>
+            <if test="type != null">type=#{type},</if>
+            <if test="effect != null">effect=#{effect},</if>
+            <if test="start_time != null">start_time=#{start_time},</if>
+            <if test="end_time != null">end_time=#{end_time}</if>
+    	</set>
+    	where id = #{id}
+    </update>
+	<update id="updateStore" parameterType="StoreFront">
+
+		UPDATE `storefront`
+		<set>
+			<if test="name != null">`name`=#{name}</if>
+		</set>
+		where id = #{id}
+	</update>
+	<delete id="delete">
+    	DELETE FROM `table_cources` where id = #{id}
+    </delete>
+    <select id="finAllFront" resultType="StoreFront">
+    	SELECT * FROM `storefront`
+    </select>
+    <insert id="creatStore" parameterType="StoreFront" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO `storefront`(id,name) VALUES (#{id},#{name});
+	</insert>
+    <resultMap type="TableCources" id="tableCourcesResultMap">
+		<id property="id" column="id"/>
+    	<result column="name" property="name"/>
+    	<result column="star_class" property="star_class"/>
+    	<result column="type" property="type"/>
+    	<result column="effect" property="effect"/>
+    	<result column="start_time" property="start_time"/>
+    	<result column="end_time" property="end_time"/>
+    	<association column="week" property="week" javaType="week" select="getWeekById"/>
+    	<association property="storeFront" column="storefront" javaType="storeFront" select="getStoreFrontById"/>
+    </resultMap>
+</mapper>
