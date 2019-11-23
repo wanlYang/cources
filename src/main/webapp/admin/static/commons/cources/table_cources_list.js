@@ -31,6 +31,8 @@ layui.use(['form', 'layer', 'jquery'], function () {
         data: {
             current: 0,
             timer: null,
+            show:true,
+            message :"温馨提示：鼠标单击删除课程,双击修改课程",
             fronts: [],
             front_id: "10132947561574263774261",
             front_name: "东郊店(金花路店)",
