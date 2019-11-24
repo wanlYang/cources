@@ -1,8 +1,85 @@
 <component name="InspectionProjectProfileManager">
   <profile version="1.0">
     <option name="myName" value="Project Default" />
+    <inspection_tool class="DefaultAnnotationParam" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="DuplicatedCode" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="29">
+            <item index="0" class="java.lang.String" itemvalue="@tap" />
+            <item index="1" class="java.lang.String" itemvalue="@tap.stop" />
+            <item index="2" class="java.lang.String" itemvalue="@tap.prevent" />
+            <item index="3" class="java.lang.String" itemvalue="@tap.once" />
+            <item index="4" class="java.lang.String" itemvalue="@click" />
+            <item index="5" class="java.lang.String" itemvalue="@click.stop" />
+            <item index="6" class="java.lang.String" itemvalue="@click.prevent" />
+            <item index="7" class="java.lang.String" itemvalue="@click.once" />
+            <item index="8" class="java.lang.String" itemvalue="@change" />
+            <item index="9" class="java.lang.String" itemvalue="@change.lazy" />
+            <item index="10" class="java.lang.String" itemvalue="@change.number" />
+            <item index="11" class="java.lang.String" itemvalue="@change.trim" />
+            <item index="12" class="java.lang.String" itemvalue="v-model" />
+            <item index="13" class="java.lang.String" itemvalue="v-for" />
+            <item index="14" class="java.lang.String" itemvalue="v-text" />
+            <item index="15" class="java.lang.String" itemvalue="v-html" />
+            <item index="16" class="java.lang.String" itemvalue="v-if" />
+            <item index="17" class="java.lang.String" itemvalue="v-else-if" />
+            <item index="18" class="java.lang.String" itemvalue="v-else" />
+            <item index="19" class="java.lang.String" itemvalue="v-pre" />
+            <item index="20" class="java.lang.String" itemvalue="v-once" />
+            <item index="21" class="java.lang.String" itemvalue="v-bind" />
+            <item index="22" class="java.lang.String" itemvalue="scoped" />
+            <item index="23" class="java.lang.String" itemvalue="v-bind:" />
+            <item index="24" class="java.lang.String" itemvalue="v-bind:class" />
+            <item index="25" class="java.lang.String" itemvalue="v-bind:id" />
+            <item index="26" class="java.lang.String" itemvalue=":key" />
+            <item index="27" class="java.lang.String" itemvalue="@dblclick" />
+            <item index="28" class="java.lang.String" itemvalue="key" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="8">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="transition-group" />
+            <item index="7" class="java.lang.String" itemvalue="transition" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="JavadocReference" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="SillyAssignment" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SpringJavaInjectionPointsAutowiringInspection" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="SqlDialectInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="UnusedAssignment" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="REPORT_PREFIX_EXPRESSIONS" value="false" />
+      <option name="REPORT_POSTFIX_EXPRESSIONS" value="true" />
+      <option name="REPORT_REDUNDANT_INITIALIZER" value="true" />
+    </inspection_tool>
+    <inspection_tool class="XmlUnboundNsPrefix" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="unused" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="LOCAL_VARIABLE" value="true" />
+      <option name="FIELD" value="true" />
+      <option name="METHOD" value="true" />
+      <option name="CLASS" value="true" />
+      <option name="PARAMETER" value="true" />
+      <option name="REPORT_PARAMETER_FOR_PUBLIC_METHODS" value="true" />
+      <option name="ADD_MAINS_TO_ENTRIES" value="true" />
+      <option name="ADD_APPLET_TO_ENTRIES" value="true" />
+      <option name="ADD_SERVLET_TO_ENTRIES" value="true" />
+      <option name="ADD_NONJAVA_TO_ENTRIES" value="true" />
+    </inspection_tool>
   </profile>
 </component>

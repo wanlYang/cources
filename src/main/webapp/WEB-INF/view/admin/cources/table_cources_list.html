@@ -12,7 +12,7 @@
     <meta name="format-detection" content="telephone=no">
     <script th:src="@{/admin/static/js/vue2.6.0.js}"></script>
     <script th:src="@{/admin/static/js/axios.min.js}"></script>
-	<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">
+	<link th:href="@{/admin/static/css/animate.css}" rel="stylesheet" type="text/css">
 	<div th:replace="admin/commons/link::head('/admin/static/css/public.css')"></div>
 
 	<style type="text/css">
@@ -76,22 +76,22 @@
 <div id="app" v-cloak>
     <blockquote class="layui-elem-quote" style="text-align: center;margin-top: 10px;">
         <!--门店获取-->
-		<transition-group  appear name="list-complete" tag="div">
+		<transition-group  appear enter-active-class="animated bounceInDown" leave-active-class="animated bounceOutDown" tag="div">
         <button type="button" style="margin: 5px;" v-bind:class="{ action_btn:index == current}"
                 class="layui-btn layui-btn-sm" @click="storeTransformation(item,index,$event)"
-                v-for="(item,index) of fronts" :key="index">{{item.name}}
+                v-for="(item,index) of fronts" :key="index+9">{{item.name}}
         </button>
 		</transition-group>
     </blockquote>
     <blockquote class="layui-elem-quote" style="text-align: center;margin-top: 10px;color: red;">
-		<transition appear name="slide-fade">
+		<transition appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
         	<li v-if="show">{{message}}</li>
 		</transition>
     </blockquote>
-    <table class="layui-table" lay-size="lg" style="width: 100%;">
+    <table class="layui-table" lay-size="lg" style="width: 100%;" lay-skin="">
         <thead>
         <tr>
-            <th style="text-align: center;" v-for="(item,index) of week" :key="index">{{item.describe}}</th>
+            <th style="text-align: center;" v-for="(item,index) of week" :key="index+12">{{item.describe}}</th>
         </tr>
         </thead>
         <tbody style="vertical-align: initial;">
@@ -117,7 +117,7 @@
                     结束时间：{{item.end_time}}<br>
                 </button>
 				</transition-group>
-				<transition appear name="list" tag="div" mode="in-out">
+				<transition appear name="list" tag="div" mode="out-in">
 					<div v-if="monday == ''" key="098" class="" style="text-align:center;height:auto;width:100%;line-height: 20px;">
 						暂无数据
 					</div>

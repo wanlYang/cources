@@ -75,7 +75,7 @@ public class TableCourcesServiceImpl implements TableCourcesService{
 					cources.add(new TableCources());
 				}
      		}
-        	 List<TableCources> cources_ = new ArrayList<TableCources>(cources);
+        	 List<TableCources> cources_ = new ArrayList<>(cources);
         	 tableCources.add(cources_);
         	 cources.clear();
 		}
@@ -151,5 +151,39 @@ public class TableCourcesServiceImpl implements TableCourcesService{
         }
 
         return new Result(200,"成功!",row,storeFront);
+    }
+
+    @Override
+    public List<List<List<TableCources>>> getAllWeekCourcesFront() {
+        List<StoreFront> storeFronts = tableCourcesMapper.finAllFront();
+        List<List<List<TableCources>>> lists = new ArrayList<>();
+        for (StoreFront s: storeFronts) {
+            List<Week> list = tableCourcesMapper.findAllWeekCources(s.getId());
+            list.sort(new Comparator<Week>() {
+                @Override
+                public int compare(Week o1, Week o2) {
+                    return o1.getId().compareTo(o2.getId());
+                }
+            });
+            List<List<TableCources>> tableCources = new ArrayList<>();
+            List<TableCources> cources = new ArrayList<TableCources>();
+            for (int j = 0; j <= 10; j++) {
+                for (Week week : list) {
+                    try {
+                        TableCources tableCources_ = week.getTableCources().get(j);
+                        cources.add(tableCources_);
+                    } catch (Exception e) {
+                        cources.add(new TableCources());
+                    }
+                }
+                List<TableCources> cources_ = new ArrayList<>(cources);
+                tableCources.add(cources_);
+                cources.clear();
+            }
+            List<List<TableCources>> tableCources_ = new ArrayList<>(tableCources);
+            lists.add(tableCources_);
+            tableCources.clear();
+        }
+        return lists;
     }
 }

@@ -3,6 +3,7 @@ package com.topshow.controller;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,9 +68,27 @@ public class TableCourcesController {
 		response.setCharacterEncoding("utf-8");
 		response.addHeader("Access-Control-Allow-Headers","Content-Type");
 		if (StringUtils.isNotBlank(callback)) {
-			return callback + "(" + JSON.toJSONString(result) + ");";
+			return callback + "(" + JSON.toJSONString(result, SerializerFeature.DisableCircularReferenceDetect) + ");";
 		}
-		return JSON.toJSONString(result);
+		return JSON.toJSONString(result,SerializerFeature.DisableCircularReferenceDetect);
+	}
+	@RequestMapping(value = "/list/front/end/sideways/all", method = RequestMethod.GET,produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String getCourcesFrontAll(HttpServletResponse response,
+								  @RequestParam(value = "callback",required = false) final String callback) {
+		Result result = new Result();
+		List<List<List<TableCources>>> lists = tableCourcesService.getAllWeekCourcesFront();
+		result.setStatus(200);
+		result.setMessage("获取成功@!");
+		result.setData(lists);
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Method", "*");
+		response.setCharacterEncoding("utf-8");
+		response.addHeader("Access-Control-Allow-Headers","Content-Type");
+		if (StringUtils.isNotBlank(callback)) {
+			return callback + "(" + JSON.toJSONString(result, SerializerFeature.DisableCircularReferenceDetect) + ");";
+		}
+		return JSON.toJSONString(result,SerializerFeature.DisableCircularReferenceDetect);
 	}
 	/**
 	 * 前端接口/获取每星期一天数据
@@ -89,9 +108,9 @@ public class TableCourcesController {
 		response.addHeader("Access-Control-Allow-Method", "*");
 		response.addHeader("Access-Control-Allow-Headers","Content-Type");
 		if (StringUtils.isNotBlank(callback)) {
-			return callback + "(" + JSON.toJSONString(result) + ");";
+			return callback + "(" + JSON.toJSONString(result,SerializerFeature.DisableCircularReferenceDetect) + ");";
 		}
-		return JSON.toJSONString(result);
+		return JSON.toJSONString(result,SerializerFeature.DisableCircularReferenceDetect);
 	}
 	
 	/**

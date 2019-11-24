@@ -29,4 +29,6 @@ public interface TableCourcesService {
     Result addStore(StoreFront storeFront);
 
     Result editStore(StoreFront storeFront);
+
+    List<List<List<TableCources>>> getAllWeekCourcesFront();
 }
