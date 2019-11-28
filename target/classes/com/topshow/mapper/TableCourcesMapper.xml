@@ -20,6 +20,7 @@
     <resultMap type="StoreFront" id="storeResultMap">
     	<id column="id" property="id"></id>
     	<result column="name" property="name"/>
+		<association property="admin" column="admin" select="com.topshow.mapper.AdminMapper.findAdmin"></association>
     </resultMap>
     <select id="getWeek" resultMap="weekResultMap">
     	select * from  `week` ORDER BY FIELD(`describe`,'星期一','星期二','星期三','星期四','星期五','星期六','星期天') ; 
@@ -42,10 +43,10 @@
     </select>
     <select id="findAllWeekCources" resultMap="weekResultMap">
     	SELECT *,table_cources.id as table_coures_id FROM `week` LEFT JOIN table_cources ON `week`.id = table_cources.`week` WHERE table_cources.storefront = #{id}
-    	 ORDER BY table_cources.end_time ASC
+    	 ORDER BY table_cources.start_time ASC
     </select>
     <select id="findCourcesByFrontIdAndWeekId" resultMap="tableCourcesResultMap">
-    	select * from `table_cources` WHERE storefront = #{frontId} AND week = #{weekId} ORDER BY end_time ASC;
+    	select * from `table_cources` WHERE storefront = #{frontId} AND week = #{weekId} order by start_time is null,start_time asc;
     </select>
     <select id="findCourcesById" resultMap="tableCourcesResultMap">
     	select * from `table_cources` WHERE id = #{id}
@@ -53,15 +54,21 @@
     <update parameterType="TableCources" id="update">
     	update `table_cources`
     	<set>
-    		<if test="name != null">`name`=#{name},</if>
-            <if test="star_class != null">star_class=#{star_class},</if>
-            <if test="type != null">type=#{type},</if>
-            <if test="effect != null">effect=#{effect},</if>
-            <if test="start_time != null">start_time=#{start_time},</if>
-            <if test="end_time != null">end_time=#{end_time}</if>
+    		`name`=#{name},
+            star_class=#{star_class},
+           	`type`=#{type},
+            effect=#{effect},
+            start_time=#{start_time},
+            end_time=#{end_time}
     	</set>
     	where id = #{id}
     </update>
+	<select id="finAllFrontByAdminId" parameterType="String" resultType="com.topshow.entity.StoreFront">
+		SELECT * FROM `storefront` WHERE  `admin` = #{admin_id}
+	</select>
+	<select id="findFrontByAdminId" parameterType="String" resultType="com.topshow.entity.StoreFront">
+		SELECT * FROM `storefront` WHERE  `admin` = #{admin_id}
+	</select>
 	<update id="updateStore" parameterType="StoreFront">
 
 		UPDATE `storefront`
@@ -90,4 +97,11 @@
     	<association column="week" property="week" javaType="week" select="getWeekById"/>
     	<association property="storeFront" column="storefront" javaType="storeFront" select="getStoreFrontById"/>
     </resultMap>
+	<update id="insertStoreForAdmin">
+
+		UPDATE `storefront` set `admin` = #{adminId} WHERE id = #{storeId}
+	</update>
+	<update id="updateStoreForAdmin">
+		UPDATE `storefront` set `admin` = #{adminId} WHERE id = #{storeId}
+	</update>
 </mapper>

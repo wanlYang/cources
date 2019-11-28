@@ -14,6 +14,10 @@ public interface TopShowConstant {
     public static final String ROLE_ADMIN = "ROLE_ADMIN";
     public static final String STAR_ICON = "★";
 
+    public static final String[] WEEKIDS = new String[]{"11976352101574247112256","21964327101574247282899",
+            "39657101421574247168608","47196108431574247199561","51065329141574247214318","67341681051574247226155","71046358971574247275310"};
+
+
     public static final String ROLE_USER = "ROLE_USER";
 
     public static final Integer IS_HOT_PRODUCT = Integer.valueOf(1);
@@ -90,4 +94,5 @@ public interface TopShowConstant {
     
     public static final String QINIU_IMG = "http://video.jytopshow.com/";
     public static final String QINIU_VIDEO = "http://video.jytopshow.com/";
+    String SUPER_ADMIN_ID = "ADMIN7826110349";
 }

@@ -29,7 +29,7 @@ public class UUIDUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(generateNumberUUID(""));
+        System.out.println(generateNumberUUID("ADMIN_ID"));
     }
 
     public static String generateUID() {

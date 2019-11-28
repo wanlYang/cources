@@ -10,8 +10,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
-<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<script th:src="@{/admin/static/js/vue2.6.0.js}"></script>
+<script th:src="@{/admin/static/js/axios.min.js}"></script>
 <div th:replace="admin/commons/link::head('/admin/static/css/public.css')"></div>
 <style type="text/css">
 	table td{
@@ -58,15 +58,15 @@
 		<div class="layui-form-mid layui-word-aux">例：训练肌肉 锻炼协调</div>
 	</div>
 	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">开始时间</label>
-		<div class="layui-input-inline">
-			<input type="text" class="layui-input start_time" lay-verify="required" name="start_time" placeholder="请输入课程开始时间" id="start_time">
-		</div>
-	</div>
-	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">结束时间</label>
-		<div class="layui-input-inline">
-			<input type="text" class="layui-input end_time" lay-verify="required" name="end_time" placeholder="请输入课程结束时间" id="end_time">
+		<label class="layui-form-label">课程范围</label>
+		<div class="layui-input-block">
+			<select name="start_end" lay-verify="required">
+				<option value=""></option>
+				<option value="12:30:00-13:30:00">12:30-13:30</option>
+				<option value="13:45:00-14:45:00">13:45-14:45</option>
+				<option value="18:30:00-19:30:00">18:30-19:30</option>
+				<option value="19:45:00-20:45:00">19:45-20:45</option>
+			</select>
 		</div>
 	</div>
 	<div class="layui-form-item layui-row layui-col-xs12">

@@ -21,12 +21,15 @@ public class Admin {
     private String password;
     //管理员电话
     private String phone;
-    //管理员邮箱
-    private String email;
+    //管理员角色
+    private String detail;
     //管理员实际状态:1 = 异常;0 = 正常
     private Integer status;
     //注册日期/管理员账号开始生效日期
     private Date forceTime;
+
+
+
     //管理员上次登录时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
@@ -54,12 +57,6 @@ public class Admin {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public Integer getStatus() {
         return status;
     }
@@ -79,11 +76,26 @@ public class Admin {
     public void setForceTime(Date forceTime) {
         this.forceTime = forceTime;
     }
-    @Override
-    public String toString() {
-        return "Admin [id=" + id + ", adminname=" + adminname + ", password=" + password + ", phone=" + phone
-                + ", email=" + email + ", status=" + status + ", forceTime=" + forceTime + ", lastLoginTime="
-                + lastLoginTime + "]";
+
+    public String getDetail() {
+        return detail;
     }
 
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id='" + id + '\'' +
+                ", adminname='" + adminname + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", detail='" + detail + '\'' +
+                ", status=" + status +
+                ", forceTime=" + forceTime +
+                ", lastLoginTime=" + lastLoginTime +
+                '}';
+    }
 }

@@ -13,6 +13,7 @@
 		method: "POST",
 		height: "full-125",
 		id: "storeListTable",
+		where : {'admin_id' : currentAdminId_Index},
 		cols: [
 				[	
 				{

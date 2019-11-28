@@ -39,4 +39,12 @@ public interface TableCourcesMapper {
     Integer creatStore(StoreFront storeFront);
 
     Integer updateStore(StoreFront storeFront);
+
+    List<StoreFront> finAllFrontByAdminId(String admin_id);
+
+    StoreFront findFrontByAdminId(String admin_id);
+
+    Integer insertStoreForAdmin(@Param("storeId") String storeId,@Param("adminId")String adminId);
+
+    Integer updateStoreForAdmin(@Param("storeId") String storeId, @Param("adminId") String adminId);
 }

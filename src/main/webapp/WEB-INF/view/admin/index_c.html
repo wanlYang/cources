@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>金彦课表</title>
+  <script th:src="@{/admin/static/js/jquery-2.0.0.min.js}"></script>
+  <script type="text/javascript" src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      /*background: url('/cour/admin/static/images/xy.jpg');*/
+	  background:#212531;
+    }
+    h3{
+      padding:8px 0;
+      font-size:28px;
+      color:#fff;
+      border-bottom: 2px solid #044e4d;
+    }
+    .xy-kb {
+      position: absolute;
+      top: -366px;
+      left: 50%;
+    }
+    .ul-father {
+      display: flex;
+      /* justify-content: center; */
+    }
+    ul {
+      list-style: none;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+      width: 100%;
+      background-color: #253532;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+      width: 100%;
+      background-color: #253532;
+    }
+
+    .footer .left {
+      height: 80px;
+      line-height: 80px;
+      padding: 0 20px;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .footer .right {
+      width: 200px;
+    }
+
+    .footer .right img {
+      display: block;
+      width: 100%;
+    }
+
+    ul li {
+      word-break: keep-all;
+      white-space: nowrap;
+      height: 50px;
+      color: #fff;
+      padding: 20px 20px;
+      border-radius: 5px;
+      margin: 10px;
+    }
+
+    ul:nth-of-type(1) li {
+      font-size: 18px;
+      font-weight: 700;
+      color: #005035;
+      background-color: #e8e8ea;
+    }
+
+    ul:nth-of-type(2) li {
+	color: #2e3a3a;
+      background-color:#42a64e;
+    }
+
+    ul:nth-of-type(3) li {
+      background-color: #2b5d2c;
+    }
+
+    ul:nth-of-type(4) li {
+	color: #2e3a3a;
+      background-color: #42a64e;
+    }
+
+    ul:nth-of-type(5) li {
+      background-color: #2b5d2c;
+    }
+
+    ul:nth-of-type(6) li {
+      color: #2e3a3a;
+      background-color: #42a64e;
+    }
+
+    ul:nth-of-type(7) li {
+      background-color: #000;
+    }
+
+    ul:nth-of-type(8) li {
+      background-color:#898989;
+    }
+
+    .time-morning {
+      height: 20px;
+    }
+
+    .left {
+      width: 360px;
+      float: left;
+    }
+
+    .left img {
+      display: block;
+      width: 100%;
+    }
+
+    .right-top {
+      margin-left: 60px;
+      font-size: 25px;
+    }
+
+    .right-bottom {
+      font-size: 13px;
+    }
+
+    .week {
+      font-size: 20px;
+      color: #fff;
+      font-weight: 700;
+    }
+    ul li p{
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .morewidth{
+	position:absolute;
+    top: 180px;
+    left: 0px;
+    width: 100%;
+    height: 10px;
+    background-color: #fff;
+    }
+
+.right {
+      color: #fff;
+      float: right;
+      padding-top:13px;
+	  padding-right:35px;
+      font-weight: 700;
+  
+    }
+
+
+ .middle {
+      float: left;
+      line-height: 80px;
+    }
+
+    .middle p {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="xy-dance" style="position: relative; height: 348px;" th:each="store,state:${list}">
+      <h3 style="text-align: center;" th:text="${store.name}">金花北路课表</h3>
+    <div class="xy-kb" style="transform: translateX(-50%) scale(0.2);">
+      <div class="header">
+        <div class="left">
+          <img th:src="@{/admin/static/images/header_02.jpg}" alt="">
+        </div>
+		<div class="middle">
+          <p  th:text="${store.name}">金花北路课表</p>
+        </div>
+        <div class="right">
+          <div class="right-top">新晔舞蹈健身艺术中心</div>
+          <div class="right-bottom">TOP SHOW DANCE FITNESS ART CENTER</div>
+        </div>
+      </div>
+      <div class="ul-father">
+        <ul class="togethertime">
+          <li class="week">时间</li>
+          <li class="time-morning">12:30-13:30</li>
+          <li style="line-height: 46px;">13:45-14:45</li>
+          <li class="time-afternor">18:30-19:30</li>
+          <li class="time-eventing">19:45-20:45</li>
+        </ul>
+        <ul th:each="week,stateTwo:${store.weeks}">
+          <li class="week" th:text="${week.describe}">星期一</li>
+          <li class='0asd' th:each="table,stateThree:${week.tableCources}" th:class="${stateTwo.index == 0 ? stateThree.index + 'asd': ''}">
+           <div th:if="${table.name == null && table.name == ''}">
+            <p th:text="${table.name}">钢管舞</p>
+            </div>
+            <div th:if="${table.name != null && table.name != ''}">
+              <p th:text="${table.name} + ${table.star_class == '★' ? '' : table.star_class}">钢管舞</p>
+            </div>
+            <span th:text="${table.type}">成品舞</span>
+            <p th:text="${table.effect}">锻炼腹部，塑形紧身</p>
+          </li>
+          <!--<li class="1asd"></li>
+          <li ></li>
+          <li class="3asd"></li>
+          <li class="4asd"></li>
+          <li class="5asd"></li>
+          <li class="6asd"></li>
+          <li class="7asd"></li>
+          <li class="8asd"></li>-->
+        </ul>
+      </div>
+      <div class="footer">
+        <div class="left">
+          <p>星级代表课程难易程度，难度随星级递增</p>
+        </div>
+        <div class="right">
+          <img th:src="@{/admin/static/images/foot.jpg}" alt="">
+        </div>
+	
+      </div>
+	<p class="morewidth" style="position:absolute;top: 180px; left: 10px; width: 99%;height: 10px; background-color: #212531;"></p>
+	<p class="morewidth2" style="position:absolute; top: 380px;left: 10px;width: 99%; height: 10px; background-color:#212531;"></p>
+	<p class="morewidth3" style="position:absolute;position:absolute;top:480px;left:10px;width:99%;height:10px;background-color:#212531;"></p>
+	<p class="morewidth4" style="position:absolute;top: 780px;left: 10px;width: 99%;height: 10px;background-color: #212531;"></p>
+    </div>
+  </div>
+  <script>
+
+    // 12：00-13：30 时间合并
+    for (var i = 0; i < $('li[class="0asd"]').length; i++) {
+      var firstheight = $('li[class="0asd"]')[i].scrollHeight;
+      var secondheight = $('li[class="1asd"]')[i].scrollHeight
+      var firsttime = $('li[class="time-morning"]')[i].style.height = Number(firstheight + secondheight - 40 + 10) + 'px'
+      $('li[class="time-morning"]')[i].style.lineHeight = firsttime
+    }
+    // 18：30-19：30 时间合并
+    for (var i = 0; i < $('li[class="0asd"]').length; i++) {
+      var threetime = $('li[class="3asd"]')[i].scrollHeight;
+      var fourthtime = $('li[class="4asd"]')[i].scrollHeight
+      var fivetime = $('li[class="5asd"]')[i].scrollHeight
+      var sixtime = $('li[class="time-afternor"]')[i].style.height = Number(threetime + fourthtime + fivetime - 40 + 20) + 'px'
+      $('li[class="time-afternor"]')[i].style.lineHeight = sixtime
+    }
+    // 19：45-20：45 时间合并
+    for (var i = 0; i < $('li[class="0asd"]').length; i++) {
+      var seventime = $('li[class="6asd"]')[i].scrollHeight;
+      var eighttime = $('li[class="7asd"]')[i].scrollHeight
+      var tentime = $('li[class="8asd"]')[i].scrollHeight
+      var lasttime = $('li[class="time-eventing"]')[i].style.height = Number(threetime + fourthtime + fivetime - 40 + 20) + 'px'
+      $('li[class="time-eventing"]')[i].style.lineHeight = lasttime
+    }
+    // 设置上下元素的宽度
+    for(var i =0; i<$('.ul-father').length; i++){
+      $('.header').eq(i).width($('.ul-father')[i].scrollWidth)
+      $('.footer').eq(i).width($('.ul-father')[i].scrollWidth)
+    }
+    //点击放大
+    var phoneWidth = window.screen.width
+    function morewidth(that, num) {
+      var scale =  that.style.transform
+      console.log(scale);
+
+      if ( scale == 'translateX(-50%) scale(0.2)') {
+        $(that).css({ "transform": " scale(1)", "top": '60px', "left": 0 });
+        $('.xy-dance')[num].style.height = 1235 + 'px'
+      }
+      else {
+        $(that).css({ "transform": "translateX(-50%) scale(0.2)", "left": "50%", "top": -366 + 'px' })
+        $('.xy-dance')[num].style.height = 348 + 'px'
+      }
+    }
+    var imgs = document.querySelectorAll('.xy-kb');
+    var fathers = document.querySelectorAll('.xy-dance');
+    var arr = []
+    imgs.forEach((item, i) => {
+      item.setAttribute('index', i)
+      item.onclick = function () {
+        var num = Number(this.getAttribute('index'))
+        morewidth(this, num)
+      }
+    })
+
+    // var canvas2 = document.createElement("canvas");
+    // let
+    //   _canvas = document.querySelector('.xy-kb');
+    // var w = parseInt(window.getComputedStyle(_canvas).width);
+    // var h = parseInt(window.getComputedStyle(_canvas).height);
+    // //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
+    // canvas2.width = w * 2;
+    // canvas2.height = h * 2;
+    // canvas2.style.width = w + "px";
+    // canvas2.style.height = h + "px";
+    // var context = canvas2.getContext("2d");
+    // context.scale(2, 2);
+    // html2canvas(document.querySelector('.xy-kb'), { canvas: canvas2 }).then(function (canvas) {
+    //   document.querySelector(".down").setAttribute('href', canvas.toDataURL());
+    // });
+  </script>
+</body>
+
+</html>

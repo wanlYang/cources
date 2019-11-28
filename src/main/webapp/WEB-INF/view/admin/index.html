@@ -28,40 +28,12 @@
 						<li class="layui-nav-item" data-menu="1">
 							<a href="javascript:;"><i class="seraph icon-caidan"></i><cite>金彦舞蹈</cite></a>
 							<dl class="layui-nav-child" id="mobileTopLevel">
-								<dd class="layui-this" data-menu="1">
-									<a href="javascript:;"><i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a>
-								</dd>
-								<dd data-menu="6">
-									<a href="javascript:;"><i class="seraph icon-icon10" data-icon="icon-icon10"></i><cite>用户中心</cite></a>
-								</dd>
-								<dd data-menu="10s">
-									<a href="javascript:;"><i class="layui-icon" data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a>
-								</dd>
-								<dd data-menu="14s">
-									<a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>商城中心</cite></a>
-								</dd>
-								<dd data-menu="18">
-									<a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>使用文档</cite></a>
-								</dd>
+
 							</dl>
 						</li>
 					</ul>
 					<ul class="layui-nav topLevelMenus" pc id="pcTopLevel">
-						<li class="layui-nav-item layui-this" data-menu="1">
-							<a href="javascript:;"><i class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a>
-						</li>
-						<li class="layui-nav-item" data-menu="6" pc>
-							<a href="javascript:;"><i class="seraph icon-icon10" data-icon="icon-icon10"></i><cite>用户中心</cite></a>
-						</li>
-						<li class="layui-nav-item" data-menu="10" pc>
-							<a href="javascript:;"><i class="layui-icon" data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a>
-						</li>
-						<li class="layui-nav-item" data-menu="14" pc>
-							<a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>商城中心</cite></a>
-						</li>
-						<li class="layui-nav-item" data-menu="18" pc>
-							<a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>使用文档</cite></a>
-						</li>
+
 					</ul>
 					<!-- 顶部右侧菜单 -->
 					<ul class="layui-nav top_menu">
@@ -102,17 +74,10 @@
 			<div class="layui-side layui-bg-black">
 				<div class="user-photo">
 					<a class="img" title="我的头像"><img th:src="@{/admin/uploads/img/01460b57e4a6fa0000012e7ed75e83.png}" onerror="this.src = '/admin/uploads/img/01460b57e4a6fa0000012e7ed75e83.png'" class="userAvatar"></a>
-					<p>你好！<span class="adminName" th:text="${session.ADMIN_SESSION.adminname}"></span>, 欢迎登录</p>
+					<p>你好！<span class="adminName" th:text="${session.ADMIN_SESSION.adminname} +''+ ${session.ADMIN_SESSION.detail}"></span></p>
 				</div>
 				<!-- 搜索 -->
-				<div class="layui-form component">
-					<select name="search" id="search" lay-search lay-filter="searchPage">
-						<option value="">搜索页面或功能</option>
-						<option value="1">layer</option>
-						<option value="2">form</option>
-					</select>
-					<i class="layui-icon">&#xe615;</i>
-				</div>
+
 				<div class="navBar layui-side-scroll" id="navBar">
 					<ul class="layui-nav layui-nav-tree">
 						<li class="layui-nav-item layui-this">
@@ -156,9 +121,7 @@
 				</p>
 			</div>
 		</div>
-		<script type="text/javascript" th:inline="javascript">
-			
-		</script>
+
 		<!-- 移动导航 -->
 		<div class="site-tree-mobile"><i class="layui-icon">&#xe602;</i></div>
 		<div class="site-mobile-shade"></div>

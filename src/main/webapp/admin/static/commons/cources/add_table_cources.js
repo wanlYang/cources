@@ -17,16 +17,6 @@ layui.use(['form', 'layer','laydate','rate'], function() {
 		var tempImg = false;
 		// 监听表单
 		//时间范围
-		laydate.render({
-			elem: '#start_time'
-			,type: 'time',
-			trigger: 'click'
-		});
-		laydate.render({
-			elem: '#end_time'
-			,type: 'time'
-			,trigger: 'click'
-		});
 		form.on("submit(addTableCources)", function(data) {
 			var index = top.layer.msg('数据提交中,请稍候', {
 				icon: 16,
@@ -34,6 +24,11 @@ layui.use(['form', 'layer','laydate','rate'], function() {
 				shade: 0.8
 			});
 			// 实际使用时的提交信息
+			var start_end = data.field.start_end;
+			var startAndEnd= new Array();
+			startAndEnd = start_end.split("-");
+			data.field.start_time = startAndEnd[0];
+			data.field.end_time = startAndEnd[1];
 			$.ajax({
 				type: "POST",
 				url: getRealPath() + "/admin/cources/table/add/submit",

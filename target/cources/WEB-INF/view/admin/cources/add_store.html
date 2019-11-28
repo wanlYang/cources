@@ -12,9 +12,9 @@
 	<div th:replace="admin/commons/link::head('/admin/static/css/public.css')"></div>
 </head>
 <body class="childrenBody">
-<form class="layui-form layui-form-pane" style="width:80%;">
+<form class="layui-form layui-form-pane" style="width:80%;" th:if="${session.ADMIN_SESSION.id == 'ADMIN7826110349'}">
 	<div class="layui-form-item layui-row layui-col-xs12">
-		<label class="layui-form-label">课程表图</label>
+		<label class="layui-form-label">门店名称</label>
 		<div class="layui-input-block">
 			<input type="text" class="layui-input name" lay-verify="required" name="name" placeholder="请输入门店名称">
 		</div>

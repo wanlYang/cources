@@ -2,10 +2,7 @@ package com.topshow.service;
 
 import java.util.List;
 
-import com.topshow.entity.Result;
-import com.topshow.entity.StoreFront;
-import com.topshow.entity.TableCources;
-import com.topshow.entity.Week;
+import com.topshow.entity.*;
 
 public interface TableCourcesService {
 
@@ -21,9 +18,9 @@ public interface TableCourcesService {
 
     Result delete(String id);
 
-	List<Week> getAllWeekCourcesDay(String id);
+	List<StoreFront> getAllWeekCourcesDay();
 
-    List<StoreFront> getFront();
+    List<StoreFront> getFront(String admin_id);
 
 
     Result addStore(StoreFront storeFront);
@@ -31,4 +28,16 @@ public interface TableCourcesService {
     Result editStore(StoreFront storeFront);
 
     List<List<List<TableCources>>> getAllWeekCourcesFront();
+
+    boolean init(String StoreId);
+
+    List<Admin> getAllAdmin();
+
+    StoreFront getOneFront(String admin_id);
+
+    StoreFront findStoreById(String store);
+
+    Integer insertStoreForAdmin(String storeId, String adminId);
+
+    void updateStoreForAdmin(String storeId, String adminId);
 }

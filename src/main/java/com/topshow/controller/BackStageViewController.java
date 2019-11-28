@@ -1,13 +1,22 @@
 package com.topshow.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.topshow.entity.Result;
+import com.topshow.entity.StoreFront;
+import com.topshow.entity.TableCources;
+import com.topshow.service.TableCourcesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.topshow.constant.TopShowConstant;
 import com.topshow.entity.Admin;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * 后台页面跳转控制
@@ -17,6 +26,29 @@ import com.topshow.entity.Admin;
 @Controller
 @RequestMapping("/admin")
 public class BackStageViewController {
+
+    @Autowired
+    private TableCourcesService tableCourcesService;
+
+    @RequestMapping(value = "/index/g",method = RequestMethod.GET)
+    public ModelAndView index_g(HttpSession session, ModelAndView modelAndView) {
+        Result result = new Result();
+        List<List<List<TableCources>>> lists = tableCourcesService.getAllWeekCourcesFront();
+        result.setStatus(200);
+        result.setMessage("获取成功@!");
+        result.setData(lists);
+        modelAndView.setViewName("/admin/index_g");
+        modelAndView.addObject("list",lists);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/index/li",method = RequestMethod.GET)
+    public ModelAndView index_li(HttpSession session, ModelAndView modelAndView) {
+        List<StoreFront> lists = tableCourcesService.getAllWeekCourcesDay();
+        modelAndView.setViewName("/admin/index_c");
+        modelAndView.addObject("list",lists);
+        return modelAndView;
+    }
     
     
     /**

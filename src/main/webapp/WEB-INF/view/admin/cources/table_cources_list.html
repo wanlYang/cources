@@ -14,7 +14,9 @@
     <script th:src="@{/admin/static/js/axios.min.js}"></script>
 	<link th:href="@{/admin/static/css/animate.css}" rel="stylesheet" type="text/css">
 	<div th:replace="admin/commons/link::head('/admin/static/css/public.css')"></div>
-
+    <script type="text/javascript" th:inline="javascript">
+        var currentAdminId_Index = [[${session.ADMIN_SESSION.id}]];
+    </script>
 	<style type="text/css">
 		table td {
 			text-align: center;
@@ -91,11 +93,13 @@
     <table class="layui-table" lay-size="lg" style="width: 100%;" lay-skin="">
         <thead>
         <tr>
+            <!--<th style="text-align: center;">时间</th>-->
             <th style="text-align: center;" v-for="(item,index) of week" :key="index+12">{{item.describe}}</th>
         </tr>
         </thead>
         <tbody style="vertical-align: initial;">
         <tr>
+            <!--<th style="text-align: center;"></th>-->
             <td v-for="(item,index) of week" :key="index">
                 <button type="button" class="layui-btn layui-btn-sm" style="width: 100%;" v-bind:id="item.id"
                         @click="addCourcesPage(item)"><i class="layui-icon">&#xe608;</i>添加课程
@@ -104,12 +108,23 @@
         </tr>
 
         <tr>
+           <!-- <td style="width: 3%;">
+                <transition  appear name="list-complete" tag="div" >
+                    &lt;!&ndash;<button class="layui-btn" style="height:350px;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
+                        sdfsdf
+
+                    </button>&ndash;&gt;
+                </transition>
+            </td>-->
+            <!--以上时间节点-->
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div" >
                 <button v-if="monday != null && monday != ''" v-for="(item,index) of monday"
-                        @dblclick="editCources(item)" @click="delCources(item,index)" :key="index+1" class="layui-btn"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        @dblclick="editCources(item)" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" :key="index+1" class="layui-btn"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''">
+
+
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -126,9 +141,9 @@
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div">
                 <button type="button" v-if="tuesday != null && tuesday !=''" :key="index+2" v-for="(item,index) of tuesday"
-                        @dblclick="editCources(item)" @click="delCources(item,index)" class="layui-btn"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        @dblclick="editCources(item)" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" class="layui-btn" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;">
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -145,9 +160,9 @@
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div">
                 <button type="button" v-if="wednesday != null && wednesday !=''" v-for="(item,index) of wednesday"
-                        @dblclick="editCources(item)" @click="delCources(item,index)"  :key="index+3"  class="layui-btn"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        @dblclick="editCources(item)" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" :key="index+3"  class="layui-btn" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;">
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -164,9 +179,9 @@
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div">
                 <button type="button" class="layui-btn" v-if="thursday != null && thursday !=''"
-                        v-for="(item,index) of thursday" @dblclick="editCources(item)" :key="index+4" @click="delCources(item,index)"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        v-for="(item,index) of thursday" @dblclick="editCources(item)" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" :key="index+4" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;">
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -183,9 +198,9 @@
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div">
                 <button type="button" class="layui-btn" v-if="friday != null && friday !=''"
-                        v-for="(item,index) of friday" :key="index+5" @dblclick="editCources(item)" @click="delCources(item,index)"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        v-for="(item,index) of friday" :key="index+5" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" @dblclick="editCources(item)" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;">
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -202,9 +217,9 @@
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div">
                 <button type="button" class="layui-btn" v-if="saturday != null && saturday !=''"
-                        v-for="(item,index) of saturday" :key="index+6" @dblclick="editCources(item)" @click="delCources(item,index)"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        v-for="(item,index) of saturday" :key="index+6" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" @dblclick="editCources(item)" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;">
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -221,9 +236,9 @@
             <td style="width: 14.2%;">
 				<transition-group  appear name="list-complete" tag="div">
                 <button type="button" class="layui-btn" v-if="sunday != null && sunday !=''"
-                        v-for="(item,index) of sunday" :key="index+7" @dblclick="editCources(item)" @click="delCources(item,index)"
-                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 10px 15px;">
-                    课程名称：{{item.name}}<br>
+                        v-for="(item,index) of sunday" :key="index+7" @click="(superAdminId == 'ADMIN7826110349')?delCources(item):''" @dblclick="editCources(item)" :class="item.name == null || item.name == ''? 'layui-btn-danger' : ''"
+                        style="height:auto;width:100%;text-align:left;margin-top:10px;line-height: 20px;padding: 5px 10px;font-size: 12px;">
+                    课程名称：<span v-if="item.name == null || item.name == ''">未设置</span>{{item.name}}<br>
                     课程星级：{{item.star_class}}<br>
                     课程类型：{{item.type}}<br>
                     课程描述：{{item.effect}}<br>
@@ -241,6 +256,7 @@
         </tbody>
     </table>
 </div>
+
 <div th:replace="admin/commons/script::script('/admin/static/commons/cources/table_cources_list.js')"></div>
 </body>
 </html>

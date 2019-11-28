@@ -16,7 +16,13 @@ public class Week {
 	private String english;
 	
 	private List<TableCources> tableCources;
-	
+
+	public Week(String id) {
+		this.id = id;
+	}
+
+	public Week() {
+	}
 
 	public List<TableCources> getTableCources() {
         return tableCources;

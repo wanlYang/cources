@@ -26,16 +26,28 @@ layui.use(['form', 'layer', 'jquery'], function () {
 
         return ary;
     };
+    function check() {
+        var userAgentInfo=navigator.userAgent;
+        var Agents =new Array("Android","iPhone","SymbianOS","Windows Phone","iPad","iPod");
+        var flag=true;
+        for(var v=0;v<Agents.length;v++) {
+            if(userAgentInfo.indexOf(Agents[v])>0) {
+                flag=false;
+                break;
+            }
+        }
+        return flag;
+    }
     const vm = new Vue({
         el: '#app',
         data: {
             current: 0,
             timer: null,
             show:true,
-            message :"温馨提示：鼠标单击删除课程,双击修改课程",
+            message :"温馨提示：鼠标单击删除课程,双击修改课程;未设置的课程为橙色",
             fronts: [],
-            front_id: "10132947561574263774261",
-            front_name: "东郊店(金花路店)",
+            front_id: "",
+            front_name: "",
             week: [],
             week_id_list: ["11976352101574247112256", "21964327101574247282899", "39657101421574247168608", "47196108431574247199561", "51065329141574247214318", "67341681051574247226155", "71046358971574247275310"],
             monday: [],
@@ -44,6 +56,7 @@ layui.use(['form', 'layer', 'jquery'], function () {
             thursday: [],
             friday: [],
             saturday: [],
+            superAdminId:currentAdminId_Index,
             sunday: [],
             tempWeek: ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
         },
@@ -51,7 +64,7 @@ layui.use(['form', 'layer', 'jquery'], function () {
             //为了在内部函数能使用外部函数的this对象，要给它赋值了一个名叫self的变量。
             const self = this;
             //店面ID
-            const front_id = this.front_id;
+
             //实际使用时的提交信息
             //获取星期数据
             axios.post(getRealPath() + "/admin/cources/table/week/list")
@@ -64,72 +77,57 @@ layui.use(['form', 'layer', 'jquery'], function () {
                     console.log(error);
                 });
             //获取店面信息
-            axios.post(getRealPath() + "/admin/cources/table/week/list/front")
-                .then(function (response) {
-                    self.fronts = response.data.data;
-                    layer.msg("获取数据成功!")
-                })
-                .catch(function (error) { // 请求失败处理
-                    layer.msg("获取数据失败!")
-                    console.log(error);
-                });
-
-            this.getWeekCources(self.front_id, self.week_id_list[0], self.tempWeek[0]).then(function (response) {
-                self.monday = response.data.data;
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: getRealPath() + "/admin/cources/table/week/list/front",
+                data: {"admin_id":currentAdminId_Index},
+                success: function(result) {
+                    if(result.status == 200) {
+                        self.fronts = result.data;
+                        self.front_id = self.fronts[0].id;
+                        layer.msg("获取数据成功!")
+                    } else {
+                        top.layer.close(index);
+                        top.layer.msg("添加失败！" + result.message);
+                    }
+                }
             });
-            this.getWeekCources(self.front_id, self.week_id_list[1], self.tempWeek[1]).then(function (response) {
-                self.tuesday = response.data.data;
-            });
-            this.getWeekCources(self.front_id, self.week_id_list[2], self.tempWeek[2]).then(function (response) {
-                self.wednesday = response.data.data;
-            });
-            this.getWeekCources(self.front_id, self.week_id_list[3], self.tempWeek[3]).then(function (response) {
-                self.thursday = response.data.data;
-            });
-            this.getWeekCources(self.front_id, self.week_id_list[4], self.tempWeek[4]).then(function (response) {
-                self.friday = response.data.data;
-            });
-            this.getWeekCources(self.front_id, self.week_id_list[5], self.tempWeek[5]).then(function (response) {
-                self.saturday = response.data.data;
-            });
-            this.getWeekCources(self.front_id, self.week_id_list[6], self.tempWeek[6]).then(function (response) {
-                self.sunday = response.data.data;
-            });
+            self.monday = this.getWeekCources(self.front_id, self.week_id_list[0], self.tempWeek[0]);
+            self.tuesday =  this.getWeekCources(self.front_id, self.week_id_list[1], self.tempWeek[1])
+            self.wednesday =this.getWeekCources(self.front_id, self.week_id_list[2], self.tempWeek[2])
+            self.thursday = this.getWeekCources(self.front_id, self.week_id_list[3], self.tempWeek[3])
+            self.friday = this.getWeekCources(self.front_id, self.week_id_list[4], self.tempWeek[4])
+            self.saturday = this.getWeekCources(self.front_id, self.week_id_list[5], self.tempWeek[5])
+            self.sunday = this.getWeekCources(self.front_id, self.week_id_list[6], self.tempWeek[6])
 
         },
         methods: {
-            getWeekCources: async function (front, week_id, describe) {
-                const params_m = new URLSearchParams();
-                params_m.append('front', front);
-                params_m.append('week', week_id);
-                return await axios.post(getRealPath() + "/admin/cources/table/list/" + describe, params_m)
+            getWeekCources: function (front, week_id, describe) {
+                var data_ = null;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: getRealPath() + "/admin/cources/table/list/" + describe,
+                    data: {"front":front,'week':week_id},
+                    success: function(result) {
+                        data_ =  result.data;
+                    }
+                });
+                return data_;
             },
             storeTransformation: async function (front, index, event) {
                 this.current = index;
                 const el = event.currentTarget;
                 vm.front_id = front.id;
                 vm.front_name = front.name;
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[0], this.tempWeek[0]).then(function (response) {
-                    vm.monday = response.data.data;
-                });
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[1], this.tempWeek[1]).then(function (response) {
-                    vm.tuesday = response.data.data;
-                });
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[2], this.tempWeek[2]).then(function (response) {
-                    vm.wednesday = response.data.data;
-                });
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[3], this.tempWeek[3]).then(function (response) {
-                    vm.thursday = response.data.data;
-                });
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[4], this.tempWeek[4]).then(function (response) {
-                    vm.friday = response.data.data;
-                });
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[5], this.tempWeek[5]).then(function (response) {
-                    vm.saturday = response.data.data;
-                });
-                await this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[6], this.tempWeek[6]).then(function (response) {
-                    vm.sunday = response.data.data;
-                });
+                vm.monday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[0], this.tempWeek[0]);
+                vm.tuesday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[1], this.tempWeek[1]);
+                vm.wednesday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[2], this.tempWeek[2]);
+                vm.thursday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[3], this.tempWeek[3]);
+                vm.friday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[4], this.tempWeek[4]);
+                vm.saturday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[5], this.tempWeek[5]);
+                vm.sunday = this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[6], this.tempWeek[6]);
 
             },
             delCources: function (cources, index) {
@@ -227,8 +225,18 @@ layui.use(['form', 'layer', 'jquery'], function () {
                         body.find(".star_class").val(strNubAry(cources.star_class)[0]);
                         body.find(".type").val(cources.type);
                         body.find(".effect").val(cources.effect);
-                        body.find(".start_time").val(cources.start_time);
-                        body.find(".end_time").val(cources.end_time);
+                        var start_end = cources.start_time + "-" + cources.end_time;
+                        body.find("#start_end").each(function() {
+                            // this代表的是<option></option>，对option再进行遍历
+                            $(this).children("option").each(function() {
+                                // 判断需要对那个选项进行回显
+                                if (this.value == start_end) {
+                                    // 进行回显
+                                    $(this).attr("selected","selected");
+                                }
+                            });
+                        })
+
                         if (typeof (iframeWindow.layui.form) != "undefined") {
                             iframeWindow.layui.form.render();
                         }
@@ -269,8 +277,20 @@ layui.use(['form', 'layer', 'jquery'], function () {
 
                     }
                 });
+                if(!check()){
+                    layui.layer.full(index);
+                    window.sessionStorage.setItem("index", index);
+                    // 改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
+                    $(window).on("resize", function() {
+                        layui.layer.full(window.sessionStorage.getItem("index"));
+                    })
+                }
             },
             addCourcesPage: function (data) {
+                if (this.superAdminId != 'ADMIN7826110349'){
+                    layer.msg("无需添加!");
+                    return;
+                }
                 const _this = this;
                 const $data = this.$data;
                 const index = layui.layer.open({
@@ -327,6 +347,14 @@ layui.use(['form', 'layer', 'jquery'], function () {
                         }
                     }
                 });
+                if(!check()){
+                    layui.layer.full(index);
+                    window.sessionStorage.setItem("index", index);
+                    // 改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
+                    $(window).on("resize", function() {
+                        layui.layer.full(window.sessionStorage.getItem("index"));
+                    })
+                }
             }
         }
     });

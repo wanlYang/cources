@@ -19,7 +19,7 @@ layui.use(['form', 'layer','jquery'], function() {
 				if(result.status == 200) {
 					setTimeout(function() {
 						top.layer.close(index);
-						top.layer.msg("添加成功！");
+						top.layer.msg("添加成功！" + result.message);
 						layer.closeAll("iframe");
 						parent.location.reload();
 					}, 500);

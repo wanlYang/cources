@@ -36,7 +36,7 @@ public class AdminController {
         if (result.getStatus().intValue() == 200) {
             session.setAttribute(TopShowConstant.ADMIN_SESSION, (Admin)result.getData());
         }
-        session.setMaxInactiveInterval(600);
+        session.setMaxInactiveInterval(7200);
         return result;
     }
     @RequestMapping(value = "/logout",method = RequestMethod.POST)

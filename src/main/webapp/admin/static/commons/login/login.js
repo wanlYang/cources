@@ -49,7 +49,6 @@
                 $("#admin_login").text("登陆").removeAttr("disabled").removeClass("layui-disabled");
             },
             success: function (data) {
-            	console.log(data);
                 if (data.status == 200) {
 //                    imunityCookie.set("adminHeadImg", data.headImg, "24");
                     window.location.href = getRealPath() + "/admin/index";

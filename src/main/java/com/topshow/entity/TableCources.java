@@ -88,5 +88,19 @@ public class TableCources {
                 + ", effect=" + effect + ", start_time=" + start_time + ", end_time=" + end_time + ", week=" + week
                 + ", storeFront=" + storeFront + "]";
     }
-	
+
+	public TableCources(String id, String name, String star_class, String type, String effect, String start_time, String end_time, Week week, StoreFront storeFront) {
+		this.id = id;
+		this.name = name;
+		this.star_class = star_class;
+		this.type = type;
+		this.effect = effect;
+		this.start_time = start_time;
+		this.end_time = end_time;
+		this.week = week;
+		this.storeFront = storeFront;
+	}
+
+	public TableCources() {
+	}
 }
