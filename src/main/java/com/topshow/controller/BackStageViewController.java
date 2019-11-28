@@ -49,6 +49,14 @@ public class BackStageViewController {
         modelAndView.addObject("list",lists);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/index/jy",method = RequestMethod.GET)
+    public ModelAndView index_jy(HttpSession session, ModelAndView modelAndView) {
+        List<StoreFront> lists = tableCourcesService.getAllWeekCourcesDay();
+        modelAndView.setViewName("/admin/index_jy");
+        modelAndView.addObject("list",lists);
+        return modelAndView;
+    }
     
     
     /**
