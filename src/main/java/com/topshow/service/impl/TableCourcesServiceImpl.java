@@ -161,6 +161,7 @@ public class TableCourcesServiceImpl implements TableCourcesService{
         if (row < 0 || row == 0){
             return new Result(-1,"失败!");
         }
+        Integer row_ = tableCourcesMapper.creatCourcesImagesByStore(storeFront);
         boolean init = init(storeFront.getId());
 
 
@@ -300,5 +301,34 @@ public class TableCourcesServiceImpl implements TableCourcesService{
         return row;
 
 
+    }
+
+    @Override
+    public List<TableImages> getImagesList(String admin_id) {
+        if (!StringUtils.isNotBlank(admin_id)){
+            return null;
+        }
+        if (admin_id.equals(TopShowConstant.SUPER_ADMIN_ID)){
+            return tableCourcesMapper.findTableImages();
+        }
+        List<StoreFront> fronts = tableCourcesMapper.finAllFrontByAdminId(admin_id);
+        return tableCourcesMapper.findTableImagesByStoreId(fronts.get(0).getId());
+    }
+
+    @Override
+    public Integer addCourcesImages(TableImages tableImages) {
+
+        return tableCourcesMapper.creatCourcesImages(tableImages);
+    }
+
+    @Override
+    public Integer deleteImages(String id) {
+        return tableCourcesMapper.deleteImages(id);
+    }
+
+    @Override
+    public List<TableImages> getAllWeekCourcesDayImg() {
+
+        return tableCourcesMapper.findAllCourcesImg();
     }
 }

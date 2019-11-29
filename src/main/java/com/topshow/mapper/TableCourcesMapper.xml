@@ -104,4 +104,28 @@
 	<update id="updateStoreForAdmin">
 		UPDATE `storefront` set `admin` = #{adminId} WHERE id = #{storeId}
 	</update>
+	<!--课程表图片-->
+	<select id="findTableImages" resultMap="tableImagesResultMap">
+		SELECT * FROM  `table_images`
+	</select>
+	<resultMap id="tableImagesResultMap" type="TableImages">
+		<id column="id" property="id"></id>
+		<result column="src" property="src"></result>
+		<association property="storeFront" column="storeid" select="getStoreFrontById"></association>
+	</resultMap>
+	<update id="creatCourcesImages" parameterType="TableImages">
+		UPDATE `table_images` SET src = #{src} WHERE storeid = #{storeFront.id};
+	</update>
+	<select id="findTableImagesByStoreId" resultMap="tableImagesResultMap">
+		SELECT * FROM `table_images` WHERE storeid = #{id}
+	</select>
+	<update id="deleteImages">
+		UPDATE `table_images` SET src = null where id = #{id}
+	</update>
+	<insert id="creatCourcesImagesByStore" parameterType="StoreFront">
+		INSERT INTO `table_images`(storeid) VALUES (#{id});
+	</insert>
+	<select id="findAllCourcesImg" resultMap="tableImagesResultMap">
+		SELECT * FROM `table_images`
+	</select>
 </mapper>

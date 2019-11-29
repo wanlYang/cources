@@ -40,4 +40,12 @@ public interface TableCourcesService {
     Integer insertStoreForAdmin(String storeId, String adminId);
 
     void updateStoreForAdmin(String storeId, String adminId);
+
+    List<TableImages> getImagesList(String admin_id);
+
+    Integer addCourcesImages(TableImages tableImages);
+
+    Integer deleteImages(String id);
+
+    List<TableImages> getAllWeekCourcesDayImg();
 }

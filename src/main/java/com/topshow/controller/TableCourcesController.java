@@ -1,6 +1,12 @@
 package com.topshow.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -11,10 +17,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.topshow.service.TableCourcesService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -23,7 +31,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/admin/cources/table")
 
 public class TableCourcesController {
-
 
 	@Autowired
 	private TableCourcesService tableCourcesService;
@@ -317,6 +324,7 @@ public class TableCourcesController {
 
 		return tableCourcesService.addStore(storeFront);
 	}
+
 	@RequestMapping(value = "/store/edit/submit", method = RequestMethod.POST)
 	@ResponseBody
 	public Result editStoreSubmit(StoreFront storeFront) {
@@ -428,5 +436,95 @@ public class TableCourcesController {
         return new Result(200,"删除成功!");
     }
 
+	/**
+	 * 上传课程表图片
+	 * @param modelAndView
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/images/list", method = RequestMethod.GET)
+	public ModelAndView imagesList(ModelAndView modelAndView,HttpSession session) {
+		modelAndView.setViewName("admin/cources/images_list");
+		return modelAndView;
+	}
 
+	@RequestMapping(value = "/images/list/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public Result imagesListSubmit(ModelAndView modelAndView,HttpSession session,String admin_id) {
+
+        Result result = new Result();
+        List<TableImages> tableImages = tableCourcesService.getImagesList(admin_id);
+        result.setStatus(200);
+        result.setMessage("获取成功!");
+        result.setData(tableImages);
+        return result;
+    }
+
+	@RequestMapping(value = "/images/get/front", method = RequestMethod.POST)
+	@ResponseBody
+	public Result getFront(ModelAndView modelAndView,HttpSession session,String storeid) {
+
+		Result result = new Result();
+		StoreFront storeFront = tableCourcesService.findStoreById(storeid);
+		result.setStatus(200);
+		result.setMessage("获取成功!");
+		result.setData(storeFront);
+		return result;
+	}
+    @RequestMapping(value = "/images/add", method = RequestMethod.GET)
+	public ModelAndView imagesAdd(ModelAndView modelAndView,HttpSession session) {
+		modelAndView.setViewName("admin/cources/add_images");
+		return modelAndView;
+	}
+	@RequestMapping(value = "/images/edit", method = RequestMethod.GET)
+	public ModelAndView imagesEdit(ModelAndView modelAndView,HttpSession session) {
+		modelAndView.setViewName("admin/cources/edit_images");
+		return modelAndView;
+	}
+    @RequestMapping(value = "/images/delete/submit", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteSubmit(ModelAndView modelAndView,HttpSession session,String id) {
+        Result result = new Result();
+        Integer row = tableCourcesService.deleteImages(id);
+        result.setStatus(200);
+        result.setMessage("删除成功!");
+        result.setData(row);
+        return result;
+    }
+	@ResponseBody
+	@RequestMapping(value = { "/edit/upload/img" }, method = { RequestMethod.POST })
+	public Map<String, Object> editChangeImg(HttpServletRequest request, @RequestParam("file") MultipartFile file,String storename,String storeid,HttpSession session)
+			throws IllegalStateException, IOException {
+		if (!StringUtils.isNotBlank(storename)){
+			Map<String, Object> map_ = new HashMap<String, Object>();
+			map_.put("code",-1);
+			map_.put("msg","店名为空!");
+			return map_;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSS");
+		String rootPath = request.getServletContext().getRealPath("/admin/uploads/");
+		String res = sdf.format(new Date());
+		String originalFilename = file.getOriginalFilename();
+		String newFileName = res + originalFilename.substring(originalFilename.lastIndexOf("."));
+		File newFile = new File(rootPath + File.separator + "cources" + File.separator + newFileName);
+		if (!newFile.getParentFile().exists()) {
+			newFile.getParentFile().mkdirs();
+		}
+		file.transferTo(newFile);
+		String fileUrl = "/admin/uploads/cources/" + newFileName;
+		Map<String, Object> map = new HashMap<String, Object>();
+		TableImages tableImages = new TableImages();
+		tableImages.setSrc(fileUrl);
+		StoreFront storeFront = new StoreFront();
+		storeFront.setId(storeid);
+		tableImages.setStoreFront(storeFront);
+		Integer row = tableCourcesService.addCourcesImages(tableImages);
+		map.put("code", Integer.valueOf(0));
+		map.put("msg", "上传成功!");
+		Map<String, Object> mapData = new HashMap<String, Object>();
+		mapData.put("src", request.getContextPath() + fileUrl);
+		mapData.put("title", newFileName);
+		map.put("data", mapData);
+		return map;
+	}
 }

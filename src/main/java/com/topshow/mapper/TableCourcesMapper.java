@@ -2,6 +2,7 @@ package com.topshow.mapper;
 
 import java.util.List;
 
+import com.topshow.entity.TableImages;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -47,4 +48,16 @@ public interface TableCourcesMapper {
     Integer insertStoreForAdmin(@Param("storeId") String storeId,@Param("adminId")String adminId);
 
     Integer updateStoreForAdmin(@Param("storeId") String storeId, @Param("adminId") String adminId);
+
+    List<TableImages> findTableImages();
+
+    Integer creatCourcesImages(TableImages tableImages);
+
+    List<TableImages> findTableImagesByStoreId(String id);
+
+    Integer deleteImages(String id);
+
+    Integer creatCourcesImagesByStore(StoreFront storeFront);
+
+    List<TableImages> findAllCourcesImg();
 }
