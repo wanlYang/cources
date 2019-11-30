@@ -29,7 +29,7 @@
 
     .xy-kb {
       position: absolute;
-      top: -390px;
+      top: -435px;
       left: 50%;
     }
 
@@ -79,7 +79,7 @@
     ul li {
       word-break: keep-all;
       white-space: nowrap;
-      height: 50px;
+      height: 60px;
       color: #000080;
       padding: 20px 20px;
       border-radius: 5px;
@@ -226,9 +226,12 @@
       font-size: 16px;
     }
     ul li p{
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
     }
+	ul li span {
+		font-size:16px;
+	}
   </style>
 </head>
 
@@ -333,10 +336,10 @@
 
       if ( scale == 'translateX(-50%) scale(0.2)') {
         $(that).css({ "transform": " scale(1)", "top": '60px', "left": 0 });
-        $('.xy-dance')[num].style.height = 1325 + 'px'
+        $('.xy-dance')[num].style.height = 1340 + 'px'
       }
       else {
-        $(that).css({ "transform": "translateX(-50%) scale(0.2)", "left": "50%", "top": -390 + 'px' })
+        $(that).css({ "transform": "translateX(-50%) scale(0.2)", "left": "50%", "top": -435 + 'px' })
         $('.xy-dance')[num].style.height = 350 + 'px'
       }
     }
@@ -355,35 +358,35 @@
     $('select').on('change', function () {
       if (this.value == 'jinhua') {
         setTimeout(() => {
-          getImg(0, 180, 240)
+          getImg(0, 160, 240)
           $('.xy-kb')[0].click()
         }, 500)
         $('.xy-kb')[0].click()
       }
       if (this.value == 'fenghe') {
         setTimeout(() => {
-          getImg(1, 180, 240)
+          getImg(1, 160, 240)
           $('.xy-kb')[1].click()
         }, 500)
         $('.xy-kb')[1].click()
       }
       if (this.value == 'landao') {
         setTimeout(() => {
-          getImg(2, 180, 240)
+          getImg(2, 160, 240)
           $('.xy-kb')[2].click()
         }, 500)
         $('.xy-kb')[2].click()
       }
       if (this.value == 'dazhai') {
         setTimeout(() => {
-          getImg(3, 180, 240)
+          getImg(3, 160, 240)
           $('.xy-kb')[3].click()
         }, 500)
         $('.xy-kb')[3].click()
       }
       if (this.value == 'qunguang') {
         setTimeout(() => {
-          getImg(4, 180, 240)
+          getImg(4, 160, 240)
           $('.xy-kb')[4].click()
         }, 500)
         $('.xy-kb')[4].click()
@@ -399,14 +402,14 @@
       var w = parseInt(window.getComputedStyle(_canvas).width);
       var h = parseInt(window.getComputedStyle(_canvas).height);
       //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
-      canvas2.width = w * 2.2;
+      canvas2.width = w * 2;
       canvas2.height = h * 2;
       canvas2.style.width = w + "px";
       canvas2.style.height = h + "px";
 
       var context = canvas2.getContext("2d");
       context.translate(x, y);
-      context.scale(1.5, 1.4);
+      context.scale(1.8, 1.6);
       html2canvas(_canvas, { canvas: canvas2 }).then(function (canvas) {
         document.querySelector(".down").setAttribute('href', canvas.toDataURL());
       });

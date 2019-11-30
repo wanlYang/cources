@@ -30,7 +30,7 @@ public class BackStageViewController {
     @RequestMapping(value = "/index/li",method = RequestMethod.GET)
     public ModelAndView index_li(HttpSession session, ModelAndView modelAndView) {
         List<StoreFront> lists = tableCourcesService.getAllWeekCourcesDay();
-        modelAndView.setViewName("/admin/index_c");
+        modelAndView.setViewName("admin/index_c");
         modelAndView.addObject("list",lists);
         return modelAndView;
     }
@@ -38,7 +38,7 @@ public class BackStageViewController {
     @RequestMapping(value = "/index/img",method = RequestMethod.GET)
     public ModelAndView index_img(HttpSession session, ModelAndView modelAndView) {
         List<TableImages> lists = tableCourcesService.getAllWeekCourcesDayImg();
-        modelAndView.setViewName("/admin/index_img");
+        modelAndView.setViewName("admin/index_img");
         modelAndView.addObject("list",lists);
         System.out.println(lists);
         return modelAndView;

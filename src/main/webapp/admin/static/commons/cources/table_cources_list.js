@@ -309,39 +309,25 @@ layui.use(['form', 'layer', 'jquery'], function () {
                         const cources = JSON.parse(window.sessionStorage.getItem("cources"));
                         if (cources != "" && cources != null) {
                             if (data.describe === "星期一") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[0], _this.tempWeek[0]).then(function (response) {
-                                    vm.monday = response.data.data;
-                                });
+                                vm.monday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[0], _this.tempWeek[0]);
                             }
                             if (data.describe === "星期二") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[1], _this.tempWeek[1]).then(function (response) {
-                                    vm.tuesday = response.data.data;
-                                });
+                                vm.tuesday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[1], _this.tempWeek[1]);
                             }
                             if (data.describe === "星期三") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[2], _this.tempWeek[2]).then(function (response) {
-                                    vm.wednesday = response.data.data;
-                                });
+                                vm.wednesday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[2], _this.tempWeek[2]);
                             }
                             if (data.describe === "星期四") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[3], _this.tempWeek[3]).then(function (response) {
-                                    vm.thursday = response.data.data;
-                                });
+                                vm.thursday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[3], _this.tempWeek[3]);
                             }
                             if (data.describe === "星期五") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[4], _this.tempWeek[4]).then(function (response) {
-                                    vm.friday = response.data.data;
-                                });
+                                vm.friday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[4], _this.tempWeek[4]);
                             }
                             if (data.describe === "星期六") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[5], _this.tempWeek[5]).then(function (response) {
-                                    vm.saturday = response.data.data;
-                                });
+                                vm.saturday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[5], _this.tempWeek[5]);
                             }
                             if (data.describe === "星期天") {
-                                vm.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[6], _this.tempWeek[6]).then(function (response) {
-                                    vm.sunday = response.data.data;
-                                });
+                                vm.sunday = _this.$options.methods.getWeekCources(vm.front_id, vm.week_id_list[6], _this.tempWeek[6]);
                             }
                             window.sessionStorage.removeItem("cources");
                         }

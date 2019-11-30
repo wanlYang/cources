@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新晔舞蹈课表</title>
+    <script th:src="@{/admin/static/js/jquery-2.0.0.min.js}"></script>
+    <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #212531;
+        }
+
+        h3 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-size: 28px;
+            color: #fff;
+            border-bottom: 2px solid #044e4d;
+        }
+
+        .xy-kb {
+            position: absolute;
+            top: -430px;
+            left: 50%;
+        }
+
+        .ul-father {
+            display: flex;
+        }
+
+        ul {
+            list-style: none;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #253532;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            height: 80px;
+            width: 100%;
+            background-color: #696969;
+        }
+
+        .footer .left {
+            height: 80px;
+            line-height: 80px;
+            padding: 0 20px;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .footer .right {
+            width: 200px;
+        }
+
+        .footer .right img {
+            display: block;
+            width: 100%;
+        }
+
+        ul li {
+            word-break: keep-all;
+            white-space: nowrap;
+            height: 60px;
+            color: #fff;
+            padding: 20px 20px;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        ul:nth-of-type(1) li {
+            font-size: 18px;
+            font-weight: 700;
+            color: #005035;
+            background-color: #e8e8ea;
+        }
+
+        ul:nth-of-type(2) li {
+            color: #2e3a3a;
+            background-color: #42a64e;
+        }
+
+        ul:nth-of-type(3) li {
+            background-color: #2b5d2c;
+        }
+
+        ul:nth-of-type(4) li {
+            color: #2e3a3a;
+            background-color: #42a64e;
+        }
+
+        ul:nth-of-type(5) li {
+            background-color: #2b5d2c;
+        }
+
+        ul:nth-of-type(6) li {
+            color: #2e3a3a;
+            background-color: #42a64e;
+        }
+
+        ul:nth-of-type(7) li {
+            background-color: #000;
+        }
+
+        ul:nth-of-type(8) li {
+            background-color: #898989;
+        }
+
+        .time-morning {
+            height: 20px;
+        }
+
+        .left {
+            display: flex;
+            float: left;
+        }
+
+        .middle {
+            float: left;
+            line-height: 80px;
+        }
+
+        .middle p {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .left img {
+            display: block;
+            width: 100%;
+        }
+
+        .right {
+            color: #fff;
+            float: right;
+            line-height: 93px;
+            margin-right: 45px;
+            letter-spacing: 5px;
+            padding: 0px 35px;
+            font-size: 29px;
+            font-weight: 700;
+        }
+
+        .right-top {
+            padding-left: 33px;
+            margin-left: 45px;
+            font-size: 25px;
+            color: #fff;
+        }
+
+        .right-bottom {
+            font-size: 13px;
+        }
+
+        .week {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .morewidth {
+            position: absolute;
+            top: 170px;
+            left: 0px;
+            width: 100%;
+            height: 10px;
+            background-color: #fff;
+        }
+
+        .morewidth2 {
+            position: absolute;
+            top: 350px;
+            left: 0px;
+            width: 100%;
+            height: 10px;
+            background-color: #fff;
+        }
+
+        .morewidth3 {
+            position: absolute;
+            top: 440px;
+            left: 0px;
+            width: 100%;
+            height: 10px;
+            background-color: #fff;
+        }
+
+        .morewidth4 {
+            position: absolute;
+            top: 710px;
+            left: 0px;
+            width: 100%;
+            height: 10px;
+            background-color: #fff;
+        }
+
+        .left-top {
+            width: 310PX;
+            height: 81px;
+            line-height: 81px;
+            font-size: 27px;
+            color: #073C29;
+            border-radius: 0 0 13px 13px;
+            padding-left: 10px;
+            background-color: #fff;
+        }
+
+        .left-top span:nth-of-type(1) {
+            margin-right: 35px;
+        }
+
+        button {
+            width: 200px;
+            height: 30px;
+            font-size: 16px;
+        }
+
+        select {
+            display: block;
+            width: 199px;
+            height: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .middle p {
+            color: #fff;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .footer .right {
+            padding-top: 18px;
+            width: 200px;
+        }
+
+        ul li p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        ul li span {
+            font-size: 16px;
+        }
+
+        .footer-right {
+          width: 200px;
+          margin-right: 100px;
+          color: #fff;
+          font-weight: 700;
+          padding-top: 18px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="button">
+    <button>
+        下载图片
+        <a class="down" href="" download="downImg" id='#sp'></a>
+    </button>
+    <select name="" id="" style="display: none;">
+        <option>请选择您要下载的店面</option>
+        <option value="zhizun">新晔舞蹈至尊店</option>
+        <option value="gaoxin">新晔舞蹈高新店</option>
+        <option value="qujiang">新晔舞蹈曲江店</option>
+        <option value="nanshaomen">新晔舞蹈南稍门店</option>
+        <option value="beijiao">新晔舞蹈北郊店</option>
+    </select>
+</div>
+<div class="xy-dance" style="position: relative; height: 348px;" th:each="store,state:${list}">
+    <h3 style="text-align: center;" th:text="${store.name}">金花北路课表</h3>
+    <div class="xy-kb" style="transform: translateX(-50%) scale(0.2);">
+        <div class="header">
+            <div class="left">
+                <div class="left-top">
+                    <span> TIMETABLE</span>
+                    <span>课程表</span>
+                </div>
+            </div>
+            <div class="middle">
+                <p th:text="${store.name}">新晔至尊店</p>
+            </div>
+            <div class="right">
+                <p>新晔舞蹈健身艺术中心</p>
+            </div>
+        </div>
+        <div class="ul-father">
+            <ul class="togethertime">
+                <li class="week">时间</li>
+                <li class="time-morning">12:30-13:30</li>
+                <li style="line-height: 46px;">13:45-14:45</li>
+                <li class="time-afternor">18:30-19:30</li>
+                <li class="time-eventing">19:45-20:45</li>
+            </ul>
+            <ul th:each="week,stateTwo:${store.weeks}">
+                <li class="week" th:text="${week.describe}">星期一</li>
+                <li class='0asd' th:each="table,stateThree:${week.tableCources}"
+                    th:class="${stateTwo.index == 0 ? stateThree.index + 'asd': ''}">
+                    <div th:if="${table.name == null && table.name == ''}">
+                        <p th:text="${table.name}">钢管舞</p>
+                    </div>
+                    <div th:if="${table.name != null && table.name != ''}">
+                        <p th:text="${table.name} + ${table.star_class == '★' ? '' : table.star_class}">钢管舞</p>
+                    </div>
+                    <span th:text="${table.type}">成品舞</span>
+                    <p th:text="${table.effect}">锻炼腹部，塑形紧身</p>
+                </li>
+            </ul>
+        </div>
+        <div class="footer">
+            <div class="left">
+                <p>星级代表课程难易程度，难度随星级递增</p>
+            </div>
+          <div class="footer-right">
+            <p>TOP SHOW</p>
+            <span>新晔舞蹈健身艺术中心</span>
+          </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+<script>
+    // 12：00-13：30 时间合并
+    for (var i = 0; i < $('li[class="0asd"]').length; i++) {
+        var firstheight = $('li[class="0asd"]')[i].scrollHeight;
+        var secondheight = $('li[class="1asd"]')[i].scrollHeight
+        var firsttime = $('li[class="time-morning"]')[i].style.height = Number(firstheight + secondheight - 40 + 10) + 'px'
+        $('li[class="time-morning"]')[i].style.lineHeight = firsttime
+    }
+    // 18：30-19：30 时间合并
+    for (var i = 0; i < $('li[class="0asd"]').length; i++) {
+        var threetime = $('li[class="3asd"]')[i].scrollHeight;
+        var fourthtime = $('li[class="4asd"]')[i].scrollHeight
+        var fivetime = $('li[class="5asd"]')[i].scrollHeight
+        var sixtime = $('li[class="time-afternor"]')[i].style.height = Number(threetime + fourthtime + fivetime - 40 + 20) + 'px'
+        $('li[class="time-afternor"]')[i].style.lineHeight = sixtime
+    }
+    // 19：45-20：45 时间合并
+    for (var i = 0; i < $('li[class="0asd"]').length; i++) {
+        var seventime = $('li[class="6asd"]')[i].scrollHeight;
+        var eighttime = $('li[class="7asd"]')[i].scrollHeight
+        var tentime = $('li[class="8asd"]')[i].scrollHeight
+        var lasttime = $('li[class="time-eventing"]')[i].style.height = Number(threetime + fourthtime + fivetime - 40 + 20) + 'px'
+        $('li[class="time-eventing"]')[i].style.lineHeight = lasttime
+    }
+    // 设置上下元素的宽度
+    for (var i = 0; i < $('.ul-father').length; i++) {
+        $('.header').eq(i).width($('.ul-father')[i].scrollWidth)
+        $('.footer').eq(i).width($('.ul-father')[i].scrollWidth)
+    }
+    //点击放大
+    var phoneWidth = window.screen.width
+
+    function morewidth(that, num) {
+        var scale = that.style.transform
+        if (scale == 'translateX(-50%) scale(0.2)') {
+            $(that).css({"transform": " scale(1)", "top": '60px', "left": 0});
+            $('.xy-dance')[num].style.height = 1340 + 'px'
+        } else {
+            $(that).css({"transform": "translateX(-50%) scale(0.2)", "left": "50%", "top": -430 + 'px'})
+            $('.xy-dance')[num].style.height = 348 + 'px'
+        }
+    }
+
+    var imgs = document.querySelectorAll('.xy-kb');
+    imgs.forEach((item, i) => {
+        item.setAttribute('index', i)
+        item.onclick = function () {
+            var num = Number(this.getAttribute('index'))
+            morewidth(this, num)
+        }
+    })
+    $('button').on('click', function () {
+        $('select')[0].style.display = 'block'
+    })
+    // 
+    $('select').on('change', function () {
+        if (this.value == 'zhizun') {
+            setTimeout(() => {
+                getImg(0, 180, 240)
+                $('.xy-kb')[0].click()
+            }, 500)
+            $('.xy-kb')[0].click()
+        }
+        if (this.value == 'gaoxin') {
+            setTimeout(() => {
+                getImg(1, 180, 240)
+                console.log(123)
+                $('.xy-kb')[1].click()
+            }, 500)
+            $('.xy-kb')[1].click()
+        }
+        if (this.value == 'qujiang') {
+            setTimeout(() => {
+                getImg(2, 180, 240)
+                $('.xy-kb')[2].click()
+            }, 500)
+            $('.xy-kb')[2].click()
+        }
+        if (this.value == 'nanshaomen') {
+            setTimeout(() => {
+                getImg(3, 180, 240)
+                $('.xy-kb')[3].click()
+            }, 500)
+            $('.xy-kb')[3].click()
+        }
+        if (this.value == 'beijiao') {
+            setTimeout(() => {
+                getImg(4, 180, 240)
+                $('.xy-kb')[4].click()
+            }, 500)
+            $('.xy-kb')[4].click()
+        }
+    });
+
+    // canvas画布
+    function getImg(i, x, y) {
+        var canvas2 = document.createElement("canvas");
+        let
+            _canvas = document.querySelectorAll('.xy-kb')[i];
+        console.log(_canvas);
+
+        var w = parseInt(window.getComputedStyle(_canvas).width);
+        var h = parseInt(window.getComputedStyle(_canvas).height);
+        //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
+        canvas2.width = w * 2;
+        canvas2.height = h * 2;
+        canvas2.style.width = w + "px";
+        canvas2.style.height = h + "px";
+
+        var context = canvas2.getContext("2d");
+        context.translate(x, y);
+        context.scale(1.8, 1.6);
+        html2canvas(_canvas, {canvas: canvas2}).then(function (canvas) {
+            document.querySelector(".down").setAttribute('href', canvas.toDataURL());
+        });
+        setTimeout(function () {
+            $('.down').each(function () {
+                this.click();
+            });
+        }, 500)
+    }
+
+</script>
+</body>
+
+</html>

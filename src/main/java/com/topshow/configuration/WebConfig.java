@@ -98,7 +98,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
 
     protected void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new AuthInterceptor());
-        interceptorRegistration.excludePathPatterns(new String[] { "/admin/index/jy","/admin/index/li","/admin/index/g","/admin/login", "/admin/regist","/admin/login/submit","/admin/cources/table/list/front/end","/admin/cources/table/list/front/end/sideways","/admin/cources/table/list/front/end/sideways/all" });
+        interceptorRegistration.excludePathPatterns(new String[] { "/admin/index/img","/admin/index/li","/admin/login", "/admin/regist","/admin/login/submit","/admin/cources/table/list/front/end","/admin/cources/table/list/front/end/sideways","/admin/cources/table/list/front/end/sideways/all" });
         interceptorRegistration
                 .addPathPatterns(new String[] { "/admin/**"});
         super.addInterceptors(registry);
