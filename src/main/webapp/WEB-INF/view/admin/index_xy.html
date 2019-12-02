@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>新晔舞蹈课表</title>
+    <title>新晔舞蹈健身操课表</title>
     <script th:src="@{/admin/static/js/jquery-2.0.0.min.js}"></script>
     <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
@@ -75,15 +75,18 @@
             width: 100%;
         }
 
-        ul li {
-            word-break: keep-all;
-            white-space: nowrap;
-            height: 60px;
-            color: #fff;
-            padding: 20px 20px;
-            border-radius: 5px;
-            margin: 10px;
-        }
+        ul li { 
+word-break: keep-all;
+    white-space: nowrap;
+    height: 106px;
+    line-height: 25px;
+    color: #fff;
+    /* padding: 20px 20px; */
+    padding: 0 25px;
+    padding-top: 0px;
+    border-radius: 5px;
+    margin: 10px;
+}
 
         ul:nth-of-type(1) li {
             font-size: 18px;
@@ -91,6 +94,10 @@
             color: #005035;
             background-color: #e8e8ea;
         }
+		ul li:nth-of-type(1){ 
+ line-height: 50px;
+    height: 50px;
+}
 
         ul:nth-of-type(2) li {
             color: #2e3a3a;
@@ -149,22 +156,16 @@
         }
 
         .right {
-            color: #fff;
-            float: right;
-            line-height: 93px;
-            margin-right: 45px;
-            letter-spacing: 5px;
-            padding: 0px 35px;
-            font-size: 29px;
-            font-weight: 700;
-        }
+    color: #fff;
+    float: right;
+    padding: 13px 35px;
+    font-weight: 700;
+}
+.right-top {
+    margin-left: 60px;
+    font-size: 25px;
+}
 
-        .right-top {
-            padding-left: 33px;
-            margin-left: 45px;
-            font-size: 25px;
-            color: #fff;
-        }
 
         .right-bottom {
             font-size: 13px;
@@ -253,12 +254,12 @@
         }
 
         ul li p {
-            font-size: 18px;
+            font-size: 21px;
             font-weight: bold;
         }
 
         ul li span {
-            font-size: 16px;
+            font-size: 18px;
         }
 
         .footer-right {
@@ -300,14 +301,15 @@
                 <p th:text="${store.name}">新晔至尊店</p>
             </div>
             <div class="right">
-                <p>新晔舞蹈健身艺术中心</p>
+                <div class="right-top">新晔舞蹈健身艺术中心</div>
+					<div class="right-bottom">TOP SHOW DANCE FITNESS ART CENTER</div>
             </div>
         </div>
         <div class="ul-father">
             <ul class="togethertime">
                 <li class="week">时间</li>
                 <li class="time-morning">12:30-13:30</li>
-                <li style="line-height: 46px;">13:45-14:45</li>
+                <li style="line-height: 100px;">13:45-14:45</li>
                 <li class="time-afternor">18:30-19:30</li>
                 <li class="time-eventing">19:45-20:45</li>
             </ul>
@@ -315,11 +317,11 @@
                 <li class="week" th:text="${week.describe}">星期一</li>
                 <li class='0asd' th:each="table,stateThree:${week.tableCources}"
                     th:class="${stateTwo.index == 0 ? stateThree.index + 'asd': ''}">
-                    <div th:if="${table.name == null && table.name == ''}">
+                    <div th:if="${table.name == null && table.name == ''}" style="padding-top:12px;">
                         <p th:text="${table.name}">钢管舞</p>
                     </div>
-                    <div th:if="${table.name != null && table.name != ''}">
-                        <p th:text="${table.name} + ${table.star_class == '★' ? '' : table.star_class}">钢管舞</p>
+                    <div th:if="${table.name != null && table.name != ''}" style="padding-top:12px;">
+                        <p th:text="${table.name} + ${table.star_class}">钢管舞</p>
                     </div>
                     <span th:text="${table.type}">成品舞</span>
                     <p th:text="${table.effect}">锻炼腹部，塑形紧身</p>
@@ -332,7 +334,7 @@
             </div>
           <div class="footer-right">
             <p>TOP SHOW</p>
-            <span>新晔舞蹈健身艺术中心</span>
+            <span>新晔舞蹈健身艺术中心	</span>
           </div>
         </div>
     </div>
@@ -343,25 +345,25 @@
 <script>
     // 12：00-13：30 时间合并
     for (var i = 0; i < $('li[class="0asd"]').length; i++) {
-        var firstheight = $('li[class="0asd"]')[i].scrollHeight;
-        var secondheight = $('li[class="1asd"]')[i].scrollHeight
-        var firsttime = $('li[class="time-morning"]')[i].style.height = Number(firstheight + secondheight - 40 + 10) + 'px'
+        var firstheight = $('li[class="0asd"]')[i].clientHeight;
+        var secondheight = $('li[class="1asd"]')[i].clientHeight
+        var firsttime = $('li[class="time-morning"]')[i].style.height = Number(firstheight + secondheight + 10) + 'px'
         $('li[class="time-morning"]')[i].style.lineHeight = firsttime
     }
     // 18：30-19：30 时间合并
     for (var i = 0; i < $('li[class="0asd"]').length; i++) {
-        var threetime = $('li[class="3asd"]')[i].scrollHeight;
-        var fourthtime = $('li[class="4asd"]')[i].scrollHeight
+        var threetime = $('li[class="3asd"]')[i].clientHeight;
+        var fourthtime = $('li[class="4asd"]')[i].clientHeight
         var fivetime = $('li[class="5asd"]')[i].scrollHeight
-        var sixtime = $('li[class="time-afternor"]')[i].style.height = Number(threetime + fourthtime + fivetime - 40 + 20) + 'px'
+        var sixtime = $('li[class="time-afternor"]')[i].style.height = Number(threetime + fourthtime + fivetime  + 20) + 'px'
         $('li[class="time-afternor"]')[i].style.lineHeight = sixtime
     }
     // 19：45-20：45 时间合并
     for (var i = 0; i < $('li[class="0asd"]').length; i++) {
-        var seventime = $('li[class="6asd"]')[i].scrollHeight;
-        var eighttime = $('li[class="7asd"]')[i].scrollHeight
+        var seventime = $('li[class="6asd"]')[i].clientHeight;
+        var eighttime = $('li[class="7asd"]')[i].clientHeight
         var tentime = $('li[class="8asd"]')[i].scrollHeight
-        var lasttime = $('li[class="time-eventing"]')[i].style.height = Number(threetime + fourthtime + fivetime - 40 + 20) + 'px'
+        var lasttime = $('li[class="time-eventing"]')[i].style.height = Number(threetime + fourthtime + fivetime  + 20) + 'px'
         $('li[class="time-eventing"]')[i].style.lineHeight = lasttime
     }
     // 设置上下元素的宽度
@@ -376,7 +378,7 @@
         var scale = that.style.transform
         if (scale == 'translateX(-50%) scale(0.2)') {
             $(that).css({"transform": " scale(1)", "top": '60px', "left": 0});
-            $('.xy-dance')[num].style.height = 1340 + 'px'
+            $('.xy-dance')[num].style.height = 1400 + 'px'
         } else {
             $(that).css({"transform": "translateX(-50%) scale(0.2)", "left": "50%", "top": -430 + 'px'})
             $('.xy-dance')[num].style.height = 348 + 'px'
@@ -398,14 +400,14 @@
     $('select').on('change', function () {
         if (this.value == 'zhizun') {
             setTimeout(() => {
-                getImg(0, 180, 240)
+                getImg(0, 190, 10)
                 $('.xy-kb')[0].click()
             }, 500)
             $('.xy-kb')[0].click()
         }
         if (this.value == 'gaoxin') {
             setTimeout(() => {
-                getImg(1, 180, 240)
+                getImg(1, 190, 10)
                 console.log(123)
                 $('.xy-kb')[1].click()
             }, 500)
@@ -413,21 +415,21 @@
         }
         if (this.value == 'qujiang') {
             setTimeout(() => {
-                getImg(2, 180, 240)
+                getImg(2, 190, 10)
                 $('.xy-kb')[2].click()
             }, 500)
             $('.xy-kb')[2].click()
         }
         if (this.value == 'nanshaomen') {
             setTimeout(() => {
-                getImg(3, 180, 240)
+                getImg(3, 190, 10)
                 $('.xy-kb')[3].click()
             }, 500)
             $('.xy-kb')[3].click()
         }
         if (this.value == 'beijiao') {
             setTimeout(() => {
-                getImg(4, 180, 240)
+                getImg(4, 190, 10)
                 $('.xy-kb')[4].click()
             }, 500)
             $('.xy-kb')[4].click()
@@ -444,14 +446,14 @@
         var w = parseInt(window.getComputedStyle(_canvas).width);
         var h = parseInt(window.getComputedStyle(_canvas).height);
         //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
-        canvas2.width = w * 2;
+        canvas2.width = w * 2.1;
         canvas2.height = h * 2;
         canvas2.style.width = w + "px";
         canvas2.style.height = h + "px";
 
         var context = canvas2.getContext("2d");
         context.translate(x, y);
-        context.scale(1.8, 1.6);
+        context.scale(1.9, 2);
         html2canvas(_canvas, {canvas: canvas2}).then(function (canvas) {
             document.querySelector(".down").setAttribute('href', canvas.toDataURL());
         });
